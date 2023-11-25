@@ -1,17 +1,17 @@
-# This example was discussed during a lecture on the 21st of November, 2023.
+# This phase diagram was given as an exercise during a lecture on the 14th of November, 2023.
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-graph_name = "Rotating pendulum"
+graph_name = "Third degree potential"
 
-M = 0.3
-E1 = -2.4
-E2 = -1.5
-E3 = -0.4
+E1 = -2
+E2 = 0
+E3 = 1
+
 
 def U(x):
-	return 1 - np.cos(x) - M * x
+	return - x * (x + 1) * (x - 0.5)
 
 def T(dxdt):
 	return dxdt**2 / 2
@@ -19,7 +19,7 @@ def T(dxdt):
 def E(x, dxdt):
 	return T(dxdt) + U(x)
 
-x = np.linspace(4.5, 18, num=1000)
+x = np.linspace(-1.5, 2, num=1000)
 y = np.linspace(-4, 4, num=1000)
 
 fig, (ax1, ax2) = plt.subplots(2, sharex=True)
