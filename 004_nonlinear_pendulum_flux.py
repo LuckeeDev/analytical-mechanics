@@ -13,6 +13,7 @@ plt.title(graph_name)
 plt.xlabel("x")
 plt.ylabel("dx/dt")
 
+plt.axis("equal")
 plt.grid()
 
 def U(x):

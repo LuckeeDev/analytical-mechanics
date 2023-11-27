@@ -9,6 +9,7 @@ graph_name = "Inverted pendulum flux"
 fig = plt.gcf()
 fig.canvas.manager.set_window_title(graph_name)
 plt.title(graph_name)
+plt.axis("equal")
 
 # Define how many points should lie at a distance of RADIUS from the center
 RADIUS = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
