@@ -53,7 +53,11 @@ dxdti = [r*np.sin(a) + 1 for r, a in ra_pairs(RADIUS, POINTS_COUNT)]
 plt.plot(xi, dxdti, 'bo', label="t=0s")
 
 t0 = 0
-tf = 5
+t1 = 18
+tf = 27
+
+x1 = []
+dxdt1 = []
 
 xf = []
 dxdtf = []
@@ -63,12 +67,16 @@ for p in range(len(xi)):
 	x = xi[p]
 	dxdt = dxdti[p]
 
-	solution = solve_ivp(system, [t0, tf], [x, dxdt], t_eval=[tf])
+	solution = solve_ivp(system, [t0, tf], [x, dxdt], t_eval=[t1, tf])
 
-	xf.append(solution.y[0][0])
-	dxdtf.append(solution.y[1][0])
+	x1.append(solution.y[0][0])
+	dxdt1.append(solution.y[1][0])
 
-plt.plot(xf, dxdtf, 'ro', label="t=5s")
+	xf.append(solution.y[0][1])
+	dxdtf.append(solution.y[1][1])
+
+plt.plot(x1, dxdt1, 'go', label=f"t={t1}s")
+plt.plot(xf, dxdtf, 'ro', label=f"t={tf}s")
 
 plt.legend()
 plt.show()
