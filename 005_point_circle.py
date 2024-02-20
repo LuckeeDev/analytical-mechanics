@@ -1,3 +1,5 @@
+# This example is unrelated to the course. It's an experiment to test matplotlib animation features
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
