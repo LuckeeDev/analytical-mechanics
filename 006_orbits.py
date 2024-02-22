@@ -2,11 +2,11 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy.integrate as spi
+from scipy.integrate import solve_ivp
+from utils.polar import *
 
 M: float = 1
-E: float = -2
-r0: float = 1.5
+r0: float = 1
 drdt0: float = 1
 phi0: float = 0
 
@@ -19,18 +19,18 @@ def V(r: float):
     return U(r) + M**2 / (2 * r**2)
 
 
-def drdt(_, r: float) -> float:
-    return np.sqrt(2 * (E - V(r)))
+E = V(r0) + drdt0**2 / 2
 
 
-# y is [r, dr/dt,, dphi/dt]
+# y is [r, dr/dt,, phi]
+# return is [dr/dt, d^2r/dt^2, dphi/dt]
 def system(_, y):
     return [y[1], -np.exp(y[0] - 6) + M**2 / y[0] ** 3, M / y[0] ** 2]
 
 
 t0 = 0
 tf = 180
-result = spi.solve_ivp(
+result = solve_ivp(
     system, [t0, tf], [r0, drdt0, phi0], t_eval=np.linspace(t0, tf, 1000)
 )
 
@@ -50,10 +50,14 @@ ax1.plot(
 ax1.legend()
 
 # Polar plot
-ax2 = fig.add_subplot(1, 2, 2, projection="polar")
+ax2 = fig.add_subplot(1, 2, 2)
+ax2.set_aspect("equal")
+ax2.grid(True)
 time_step = (tf - t0) / 1000
 r_values = result.y[0]
 phi_values = result.y[2]
-ax2.plot(phi_values, r_values)
+x_values, y_values = to_cartesian(r_values, phi_values)
+ax2.plot(x_values, y_values, label="Orbit", color="tab:orange")
+ax2.legend()
 
 plt.show()
